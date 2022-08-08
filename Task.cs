@@ -48,13 +48,13 @@ namespace ConsoleApp1
     {
         private int _reserevedGoodsCount;
         private int _lastReserevedGoodsCount;
+        private Good _good;
 
-        public Good Good { get; private set; }
         public int Count { get; private set; }
 
         public static Cell GetNeededCellInCellList(List<Cell> cells, Good good)
         {
-            var neededCell = cells.FirstOrDefault(cell => cell.Good == good);
+            var neededCell = cells.FirstOrDefault(cell => cell._good == good);
 
             if (neededCell != null)
             {
@@ -66,13 +66,13 @@ namespace ConsoleApp1
 
         public Cell(Good good, int count)
         {
-            Good = good;
+            _good = good;
             Count = count;
         }
 
         public void AddGoods(Good good, int count)
         {
-            if (Good == good)
+            if (_good == good)
             {
                 Count += count;
             }
@@ -80,7 +80,7 @@ namespace ConsoleApp1
 
         public bool TryReserevGoods(Good good, int count)
         {
-            if (good == Good && count > 0 && Count - count - _reserevedGoodsCount >= 0)
+            if (good == _good && count > 0 && Count - count - _reserevedGoodsCount >= 0)
             {
                 _lastReserevedGoodsCount = count;
                 return true;
@@ -149,7 +149,7 @@ namespace ConsoleApp1
         {
             if (count > 0)
             {
-                var neededGood = _cells.FirstOrDefault(cell => cell.Good == good);
+                var neededGood = Cell.GetNeededCellInCellList(_cells, good);
 
                 if (neededGood != null)
                 {
