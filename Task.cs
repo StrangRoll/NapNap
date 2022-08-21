@@ -2,4 +2,8 @@
 
 namespace Task
 {
+    class Gun
+    {
+        public void Shoot() { }
+    }
 }
